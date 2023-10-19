@@ -14,6 +14,22 @@ pnpm dev
 bun dev
 ```
 
+## PRISMA COMMANDS
+
+```bash
+# create a new migration with the changes made on schema.prisma
+npx prisma migrate dev --name rollback_discount_price
+
+# executes the current migrations to push database config
+npx prisma migrate deploy
+
+# push schema configs to database
+npx prisma db push
+
+# seed your db with seed.ts data
+bun dev
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
