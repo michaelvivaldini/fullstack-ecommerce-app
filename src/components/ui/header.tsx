@@ -23,6 +23,8 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Badge } from "./badge";
+import Cart from "./cart";
 import { Separator } from "./separator";
 
 interface HeaderProps {}
@@ -127,9 +129,26 @@ const Header: FunctionComponent<HeaderProps> = () => {
         </h1>
       </Link>
 
-      <Button size="icon" variant="outline">
-        <ShoppingCartIcon />
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <ShoppingCartIcon />
+          </Button>
+        </SheetTrigger>
+
+        <SheetContent side="right">
+          <SheetHeader className="text-left text-lg font-semibold">
+            <Badge
+              variant="outline"
+              className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+            >
+              <ShoppingCartIcon size={16} />
+              CARRINHO
+            </Badge>
+          </SheetHeader>
+          <Cart />
+        </SheetContent>
+      </Sheet>
     </Card>
   );
 };

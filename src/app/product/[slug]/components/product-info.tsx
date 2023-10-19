@@ -2,24 +2,24 @@
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
+import { CartContext } from "@/providers/cart";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   TruckIcon
 } from "lucide-react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 
 interface ProductInfoProps {
-  product: Pick<
-    ProductWithTotalPrice,
-    "basePrice" | "description" | "discountPercentage" | "totalPrice" | "name"
-  >;
+  product: ProductWithTotalPrice;
 }
 
 const ProductInfo: FunctionComponent<ProductInfoProps> = ({
-  product: { basePrice, description, discountPercentage, totalPrice, name },
+  product,
 }) => {
   const [quantity, setQuantity] = useState(1);
+
+  const { addProductToCart } = useContext(CartContext);
 
   const handleDecreaseQuantityClick = () => {
     setQuantity((prev) => (prev === 1 ? prev : prev - 1));
@@ -29,18 +29,22 @@ const ProductInfo: FunctionComponent<ProductInfoProps> = ({
     setQuantity((prev) => prev + 1);
   };
 
+  const handleAddProductToCartClick = () => {
+    addProductToCart({...product, quantity})
+  }
+
   return (
     <div className="flex flex-col px-5">
-      <h1 className="text-lg">{name}</h1>
+      <h1 className="text-lg">{product.name}</h1>
       <div className="flex items-center gap-1">
-        <h2 className="text-xl font-bold">R$ {totalPrice.toFixed(2)}</h2>
-        {discountPercentage > 0 && (
-          <DiscountBadge className="w-fit">{discountPercentage}%</DiscountBadge>
+        <h2 className="text-xl font-bold">R$ {product.totalPrice.toFixed(2)}</h2>
+        {product.discountPercentage > 0 && (
+          <DiscountBadge className="w-fit">{product.discountPercentage}%</DiscountBadge>
         )}
       </div>
-      {discountPercentage > 0 && (
+      {product.discountPercentage > 0 && (
         <p className="text-sm line-through opacity-75">
-          R$ {Number(basePrice).toFixed(2)}
+          R$ {Number(product.basePrice).toFixed(2)}
         </p>
       )}
 
@@ -66,10 +70,10 @@ const ProductInfo: FunctionComponent<ProductInfoProps> = ({
 
       <div className="mt-8 flex flex-col gap-3">
         <h3 className="font-bold">Descrição</h3>
-        <p className="text-justify text-sm opacity-60">{description}</p>
+        <p className="text-justify text-sm opacity-60">{product.description}</p>
       </div>
 
-      <Button className="mt-8 font-bold uppercase">
+      <Button onClick={handleAddProductToCartClick} className="mt-8 font-bold uppercase">
         Adicionar ao carrinho
       </Button>
 
