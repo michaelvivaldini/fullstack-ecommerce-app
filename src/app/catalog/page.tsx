@@ -3,8 +3,6 @@ import { prismaClient } from "@/lib/prisma";
 import { ShapesIcon } from "lucide-react";
 import CategoryItem from "./components/category-item";
 
-interface CatalogPageProps {}
-
 const CatalogPage = async () => {
   const categories = await prismaClient.category.findMany();
 
