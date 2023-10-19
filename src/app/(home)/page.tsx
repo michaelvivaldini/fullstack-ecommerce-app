@@ -30,7 +30,7 @@ const Home = async () => {
   });
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-8 py-8">
       <PromoBanner
         src="/banner-home-01.png"
         alt="Até 55% de desconto neste mês!"
@@ -60,7 +60,7 @@ const Home = async () => {
         alt="Até 55% de desconto em fones!"
       />
 
-<div>
+      <div>
         <SectionTitle>Mouses</SectionTitle>
         <ProductList products={mouses} />
       </div>
