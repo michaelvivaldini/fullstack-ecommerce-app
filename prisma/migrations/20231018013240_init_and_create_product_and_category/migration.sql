@@ -15,7 +15,7 @@ CREATE TABLE "Product" (
     "slug" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "basePrice" DECIMAL(8,2) NOT NULL,
-    "discountPrice" DECIMAL(8,2) NOT NULL,
+    "discountPercentage" INTEGER NOT NULL DEFAULT 0,
     "imageUrl" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
 
