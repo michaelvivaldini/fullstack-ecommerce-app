@@ -1,21 +1,25 @@
 import { Badge } from "@/components/ui/badge";
 import { CATEGORY_ICON } from "@/constants/category-icon";
 import { Category } from "@prisma/client";
+import Link from "next/link";
 import { FunctionComponent } from "react";
 
 interface CategoryItemProps {
-  category: Category
+  category: Category;
 }
- 
-const CategoryItem: FunctionComponent<CategoryItemProps> = ({category}) => {
 
+const CategoryItem: FunctionComponent<CategoryItemProps> = ({ category }) => {
+  return (
+    <Link href={`/category/${category.slug}`}>
+      <Badge
+        variant="outline"
+        className="flex items-center justify-center gap-2 rounded-lg py-3"
+      >
+        {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
+        <span className="text-xs font-bold">{category.name}</span>
+      </Badge>
+    </Link>
+  );
+};
 
-  return ( 
-    <Badge variant="outline" className="py-3 flex justify-center items-center gap-2 rounded-lg">
-      {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
-      <span className="text-xs font-bold">{category.name}</span>
-    </Badge>
-   );
-}
- 
 export default CategoryItem;
