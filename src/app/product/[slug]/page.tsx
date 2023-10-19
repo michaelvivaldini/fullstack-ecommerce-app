@@ -1,3 +1,5 @@
+import ProductList from "@/components/ui/product-list";
+import SectionTitle from "@/components/ui/section-title";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { prismaClient } from "@/lib/prisma";
 import { FunctionComponent } from "react";
@@ -15,14 +17,29 @@ const ProductDetailsPage: FunctionComponent<ProductDetailsPageProps> = async ({
     where: {
       slug: slug,
     },
+    include: {
+      category: {
+        include: {
+          products: {
+            where: {
+              slug: { not: slug },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!product) return null;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 pb-8">
       <ProductImages name={product.name} imageUrls={product.imageUrls} />
       <ProductInfo product={computeProductTotalPrice(product)} />
+      <div>
+        <SectionTitle>Produtos Recomendados</SectionTitle>
+        <ProductList products={product.category.products} />
+      </div>
     </div>
   );
 };
