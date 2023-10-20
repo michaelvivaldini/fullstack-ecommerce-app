@@ -1,6 +1,10 @@
 import { CartContext } from "@/providers/cart";
+import { ShoppingCartIcon } from "lucide-react";
 import { FunctionComponent, useContext } from "react";
+import { Badge } from "./badge";
+import { Button } from "./button";
 import CartItem from "./cart-item";
+import { ScrollArea } from "./scroll-area";
 import { Separator } from "./separator";
 
 interface CartProps {}
@@ -8,20 +12,33 @@ interface CartProps {}
 const Cart: FunctionComponent<CartProps> = () => {
   const { products, subTotal, total, totalDiscount } = useContext(CartContext);
   return (
-    <div>
-      <div className="flex flex-col gap-5 py-8">
-        {products.length > 0 ? (
-          products.map((product) => (
-            <CartItem key={product.id} product={product} />
-          ))
-        ) : (
-          <div>
-            <h2 className="text-center text-lg font-bold">Carrinho vazio</h2>
-            <p className="text-center text-sm">
-              Aproveite agora as melhores ofertas do site!{" "}
-            </p>
+    <div className="flex h-full flex-col">
+      <Badge
+        variant="outline"
+        className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+      >
+        <ShoppingCartIcon size={16} />
+        CARRINHO
+      </Badge>
+      <div className="h-full overflow-hidden py-8">
+        <ScrollArea className="h-full">
+          <div className="flex h-full flex-col gap-8">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <CartItem key={product.id} product={product} />
+              ))
+            ) : (
+              <div>
+                <h2 className="text-center text-lg font-bold">
+                  Carrinho vazio
+                </h2>
+                <p className="text-center text-sm">
+                  Aproveite agora as melhores ofertas do site!{" "}
+                </p>
+              </div>
+            )}
           </div>
-        )}
+        </ScrollArea>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -48,7 +65,8 @@ const Cart: FunctionComponent<CartProps> = () => {
           <p>Total</p>
           <p>R$ {total.toFixed(2)}</p>
         </div>
-        
+
+        <Button className="uppercase font-bold mt-7">Finalizar compra</Button>
       </div>
     </div>
   );
