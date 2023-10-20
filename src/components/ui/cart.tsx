@@ -1,14 +1,15 @@
 import { CartContext } from "@/providers/cart";
 import { FunctionComponent, useContext } from "react";
+import CartItem from "./cart-item";
 
 interface CartProps {}
 
 const Cart: FunctionComponent<CartProps> = () => {
   const { products } = useContext(CartContext);
   return (
-    <div>
+    <div className="flex flex-col gap-5 py-8">
       {products.map((product) => (
-        <h1 key={product.id}>{product.name}</h1>
+        <CartItem key={product.id} product={product} />
       ))}
     </div>
   );
