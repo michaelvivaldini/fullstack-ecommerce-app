@@ -16,9 +16,8 @@ interface SheetPortalProps extends SheetPrimitive.DialogPortalProps {
 }
 
 const SheetPortal = ({ className, ...props }: SheetPortalProps) => (
-  <div className={cn(className)}>
-    <SheetPrimitive.Portal {...props} />
-  </div>
+  //@ts-expect-error
+  <SheetPrimitive.Portal className={className} {...props} />
 );
 SheetPortal.displayName = SheetPrimitive.Portal.displayName;
 
@@ -134,7 +133,15 @@ const SheetDescription = React.forwardRef<
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
 export {
-  Sheet, SheetClose,
-  SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetOverlay, SheetPortal, SheetTitle, SheetTrigger
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetOverlay,
+  SheetPortal,
+  SheetTitle,
+  SheetTrigger
 };
 
