@@ -10,24 +10,24 @@ export const createCheckout = async (products: CartProduct[]) => {
 
   const checkout = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    mode: 'payment',
+    mode: "payment",
     success_url: "http://localhost:3000",
     cancel_url: "http://localhost:3000",
-    line_items: products.map(product => {
+    line_items: products.map((product) => {
       return {
         price_data: {
           currency: "brl",
           product_data: {
             name: product.name,
             description: product.description,
-            images: product.imageUrls
+            images: product.imageUrls,
           },
-          unit_amount: product.totalPrice * 100, 
+          unit_amount: product.totalPrice * 100,
         },
-        quantity: product.quantity
-      }
-    })
-  })
+        quantity: product.quantity,
+      };
+    }),
+  });
 
-  return checkout
+  return checkout;
 };
